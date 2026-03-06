@@ -11,6 +11,7 @@ Language: [English](user-guide.md) | [中文](user-guide.zh-CN.md)
 - 让 Agent 通过截图观察当前桌面
 - 点击或移动鼠标
 - 输入文本或触发快捷键
+- 向不稳定响应直接键入事件的输入框粘贴短文本
 
 ## 首次使用前
 
@@ -104,6 +105,7 @@ MACINPUT_DEFAULT_SCREENSHOT_TTL=15 MACINPUT_MAX_TYPING_LENGTH=500 macinput-mcp
 3. 当 Agent 不需要时，不要让敏感应用暴露在当前桌面。
 4. 除非宿主明确要求 HTTP，否则优先使用 `stdio`。
 5. 输入文本前确认当前焦点，因为文本总是发送给当前聚焦应用。
+6. 如果目标应用对 `type_text_input` 响应不稳定，优先使用 `paste_text_input`。
 
 ## 故障排查
 

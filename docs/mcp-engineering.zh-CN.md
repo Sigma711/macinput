@@ -22,6 +22,7 @@ Language: [English](mcp-engineering.md) | [中文](mcp-engineering.zh-CN.md)
 - `keyboard_key_down`
 - `keyboard_key_up`
 - `type_text_input`
+- `paste_text_input`
 - `capture_screenshot`
 - `cleanup_screenshot_file`
 - `get_server_settings`

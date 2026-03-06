@@ -15,6 +15,7 @@ Language: [English](README.md) | [中文](README.zh-CN.md)
 - 获取当前鼠标坐标
 - 键盘按键按下、释放、组合键
 - Unicode 文本输入
+- 基于剪贴板的粘贴输入
 - 全屏截图与临时文件自动清理
 - MCP resources 与 prompt，用于向 Agent 注入使用规范
 
@@ -106,6 +107,7 @@ macinput-mcp --transport streamable-http --host 127.0.0.1 --port 8000 --path /mc
 - `keyboard_key_down`
 - `keyboard_key_up`
 - `type_text_input`
+- `paste_text_input`
 - `capture_screenshot`
 - `cleanup_screenshot_file`
 
@@ -221,6 +223,7 @@ CI 会在 `push` 和 `pull_request` 时执行 lint 与测试。Release workflow 
 - 只支持 macOS
 - 必须运行在有图形会话的真实桌面环境
 - CI 很难完整覆盖 UI 注入行为，真实机器验证仍然必要
+- `paste_text_input` 通过系统剪贴板工作，当前只保留并恢复纯文本剪贴板内容
 - 不包含 OCR、元素识别或窗口语义理解，这些应由上层 Agent 负责
 
 ## 面向维护者的建议

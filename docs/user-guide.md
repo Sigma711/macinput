@@ -11,6 +11,7 @@ Use it when your agent needs to:
 - inspect the current macOS desktop through screenshots
 - click or move the mouse
 - type text or send shortcuts
+- paste short text into inputs that do not reliably accept direct typing events
 
 ## Before first use
 
@@ -104,6 +105,7 @@ MACINPUT_DEFAULT_SCREENSHOT_TTL=15 MACINPUT_MAX_TYPING_LENGTH=500 macinput-mcp
 3. Avoid leaving sensitive apps visible when the agent does not need them.
 4. Prefer `stdio` unless your host requires HTTP.
 5. Verify focus before typing, because typing always goes to the currently focused app.
+6. Prefer `paste_text_input` when a target app ignores or inconsistently handles `type_text_input`.
 
 ## Troubleshooting
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import subprocess
 import time
 from typing import Iterable
 
@@ -159,3 +160,41 @@ def type_text(text: str, *, interval: float = 0.0) -> None:
 
         if interval > 0:
             time.sleep(interval)
+
+
+def _read_clipboard_text() -> str | None:
+    result = subprocess.run(
+        ["pbpaste"],
+        check=True,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout.decode("utf-8")
+
+
+def _write_clipboard_text(text: str) -> None:
+    subprocess.run(
+        ["pbcopy"],
+        check=True,
+        input=text.encode("utf-8"),
+    )
+
+
+def paste_text(
+    text: str,
+    *,
+    restore_clipboard: bool = True,
+    settle_delay: float = 0.1,
+) -> None:
+    """Paste plain text via the clipboard, then optionally restore prior text."""
+    original_text = _read_clipboard_text() if restore_clipboard else None
+    try:
+        _write_clipboard_text(text)
+        press_key("v", modifiers=["command"])
+        if settle_delay > 0:
+            time.sleep(settle_delay)
+    finally:
+        if restore_clipboard:
+            restored_text = "" if original_text is None else original_text
+            _write_clipboard_text(restored_text)

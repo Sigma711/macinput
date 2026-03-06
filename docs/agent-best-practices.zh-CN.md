@@ -44,6 +44,8 @@ Language: [English](agent-best-practices.md) | [中文](agent-best-practices.zh-
 
 只输入当前步骤需要的文本。大段生成文本会提高误输入和敏感信息泄露的概率。
 
+如果已聚焦控件对 `type_text_input` 响应不稳定，应切换到 `paste_text_input`，不要重复赌直接键入这条路径。
+
 ### 把截图当作临时工件
 
 读取、使用、完成后就清理。

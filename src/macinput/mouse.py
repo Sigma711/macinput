@@ -47,14 +47,9 @@ Button = Literal["left", "right"]
 
 
 def move_to(x: float, y: float) -> None:
-    """Move mouse cursor to absolute coordinates."""
-    event = Quartz.CGEventCreateMouseEvent(
-        None,
-        Quartz.kCGEventMouseMoved,
-        (float(x), float(y)),
-        Quartz.kCGMouseButtonLeft,
-    )
-    Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
+    """Move mouse cursor to absolute coordinates using CGWarpMouseCursorPosition."""
+    # Keep movement coordinates aligned with get_position() and screenshot-based clicks.
+    Quartz.CGWarpMouseCursorPosition(Quartz.CGPoint(float(x), float(y)))
 
 
 def get_position() -> tuple[float, float]:

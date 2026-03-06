@@ -44,6 +44,8 @@ Coordinates become stale whenever:
 
 Only type the text needed for the current task step. Large generated text increases the chance of input mistakes and accidental disclosure.
 
+If a focused control does not reliably accept `type_text_input`, switch to `paste_text_input` instead of retrying the same direct typing path.
+
 ### Use screenshots as ephemeral artifacts
 
 Read them, use them, then clean them up.

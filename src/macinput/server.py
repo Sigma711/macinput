@@ -6,7 +6,7 @@ import time
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
-from .keyboard import key_down, key_up, press_key, type_text
+from .keyboard import key_down, key_up, paste_text, press_key, type_text
 from .mouse import click, get_position, move_to
 from .screenshot import capture_screen, cleanup_screenshot
 from .settings import ServerSettings
@@ -193,6 +193,21 @@ def create_server(settings: ServerSettings | None = None) -> Any:
         type_text(text, interval=resolved_interval)
         _sleep(active_settings)
         return ActionResult(ok=True, message=f"Typed {len(text)} characters.")
+
+    @server.tool()
+    def paste_text_input(text: str, restore_clipboard: bool = True) -> ActionResult:
+        """Paste plain text into the focused target via clipboard and Cmd+V."""
+        if len(text) > active_settings.max_typing_length:
+            raise ValueError(
+                f"text is too long: {len(text)} > {active_settings.max_typing_length}"
+            )
+        paste_text(text, restore_clipboard=restore_clipboard)
+        _sleep(active_settings)
+        restore_note = " and restored clipboard text" if restore_clipboard else ""
+        return ActionResult(
+            ok=True,
+            message=f"Pasted {len(text)} characters{restore_note}.",
+        )
 
     @server.tool()
     def capture_screenshot(cleanup_after: float | None = None) -> ScreenshotResult:

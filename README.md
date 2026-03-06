@@ -15,6 +15,7 @@ The project has two goals:
 - Current mouse position lookup
 - Key press, key down, key up, and modifier combinations
 - Unicode text input
+- Clipboard-backed paste input
 - Full-screen screenshots with automatic cleanup
 - MCP resources and prompt templates for agent guidance
 
@@ -106,6 +107,7 @@ If the package is already installed into the current environment:
 - `keyboard_key_down`
 - `keyboard_key_up`
 - `type_text_input`
+- `paste_text_input`
 - `capture_screenshot`
 - `cleanup_screenshot_file`
 
@@ -221,6 +223,7 @@ The CI workflow runs lint and tests on `push` and `pull_request`. The release wo
 - macOS only
 - Requires a real GUI session
 - CI can validate imports and configuration, but real machine validation is still necessary for UI injection
+- `paste_text_input` uses the system clipboard and currently preserves/restores plain-text clipboard content only
 - Does not include OCR, UI element detection, or semantic window understanding
 
 ## Recommended follow-up work
