@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/Sigma711/macinput#readme
+    about: Check the README and guides before opening an issue.
