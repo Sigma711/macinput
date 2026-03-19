@@ -10,6 +10,7 @@ Use it when your agent needs to:
 
 - inspect the current macOS desktop through screenshots
 - click or move the mouse
+- scroll vertically or horizontally
 - type text or send shortcuts
 - paste short text into inputs that do not reliably accept direct typing events
 

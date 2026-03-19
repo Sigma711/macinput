@@ -18,6 +18,7 @@ The exported MCP capabilities are intentionally small:
 - `get_mouse_position`
 - `move_mouse`
 - `click_mouse`
+- `scroll_mouse`
 - `press_keyboard_key`
 - `keyboard_key_down`
 - `keyboard_key_up`
@@ -32,6 +33,8 @@ This is the practical boundary for a UI-control server:
 - enough control to operate arbitrary macOS apps
 - small enough to keep agent plans interpretable
 - minimal enough to reduce accidental destructive actions
+
+For keyboard tools, the MCP layer accepts either string digits like `"3"` or numeric digits like `3` and normalizes both to the digit key. This avoids brittle failures when hosts serialize a single digit as a JSON number.
 
 ## Safety defaults
 

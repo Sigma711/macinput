@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
 from .keyboard import key_down, key_up, paste_text, press_key, type_text
-from .mouse import click, get_position, move_to
+from .mouse import click, get_position, move_to, scroll
 from .screenshot import capture_screen, cleanup_screenshot
 from .settings import ServerSettings
 
@@ -21,6 +21,7 @@ else:
 
 
 Button = Literal["left", "right"]
+ToolKey = str | int
 
 SERVER_INSTRUCTIONS = """
 You control a macOS machine through keyboard, mouse, and screenshot tools.
@@ -112,6 +113,15 @@ def _resolve_cleanup_after(settings: ServerSettings, cleanup_after: float | None
     return value
 
 
+def _normalize_tool_key(key: ToolKey) -> str | int:
+    """Interpret numeric MCP key inputs as digit keys, not raw macOS keycodes."""
+    if isinstance(key, int):
+        if 0 <= key <= 9:
+            return str(key)
+        raise ValueError("Numeric MCP key arguments must be single digits between 0 and 9.")
+    return key
+
+
 def create_server(settings: ServerSettings | None = None) -> Any:
     _ensure_mcp_import()
 
@@ -156,29 +166,42 @@ def create_server(settings: ServerSettings | None = None) -> Any:
 
     @server.tool()
     def press_keyboard_key(
-        key: str,
+        key: ToolKey,
         modifiers: list[str] | None = None,
         hold: float = 0.0,
     ) -> ActionResult:
         """Press and release a key with optional modifiers."""
-        press_key(key, modifiers=modifiers, hold=hold)
+        normalized_key = _normalize_tool_key(key)
+        press_key(normalized_key, modifiers=modifiers, hold=hold)
         _sleep(active_settings)
         modifier_text = f" with modifiers {modifiers}" if modifiers else ""
-        return ActionResult(ok=True, message=f"Pressed key `{key}`{modifier_text}.")
+        return ActionResult(ok=True, message=f"Pressed key `{normalized_key}`{modifier_text}.")
 
     @server.tool()
-    def keyboard_key_down(key: str, modifiers: list[str] | None = None) -> ActionResult:
+    def keyboard_key_down(key: ToolKey, modifiers: list[str] | None = None) -> ActionResult:
         """Hold a key down. Pair with `keyboard_key_up` if you need manual control."""
-        key_down(key, modifiers=modifiers)
+        normalized_key = _normalize_tool_key(key)
+        key_down(normalized_key, modifiers=modifiers)
         _sleep(active_settings)
-        return ActionResult(ok=True, message=f"Held key `{key}` down.")
+        return ActionResult(ok=True, message=f"Held key `{normalized_key}` down.")
 
     @server.tool()
-    def keyboard_key_up(key: str, modifiers: list[str] | None = None) -> ActionResult:
+    def keyboard_key_up(key: ToolKey, modifiers: list[str] | None = None) -> ActionResult:
         """Release a key previously pressed down."""
-        key_up(key, modifiers=modifiers)
+        normalized_key = _normalize_tool_key(key)
+        key_up(normalized_key, modifiers=modifiers)
         _sleep(active_settings)
-        return ActionResult(ok=True, message=f"Released key `{key}`.")
+        return ActionResult(ok=True, message=f"Released key `{normalized_key}`.")
+
+    @server.tool()
+    def scroll_mouse(vertical: int = 0, horizontal: int = 0) -> ActionResult:
+        """Scroll the mouse wheel by line units."""
+        scroll(vertical=vertical, horizontal=horizontal)
+        _sleep(active_settings)
+        return ActionResult(
+            ok=True,
+            message=f"Scrolled mouse vertical={vertical}, horizontal={horizontal}.",
+        )
 
     @server.tool()
     def type_text_input(text: str, interval: float | None = None) -> ActionResult:

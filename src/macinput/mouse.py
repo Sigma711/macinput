@@ -121,3 +121,19 @@ def right_click(*, x: float | None = None, y: float | None = None) -> None:
 
 def double_click(*, x: float | None = None, y: float | None = None) -> None:
     click("left", x=x, y=y, double=True)
+
+
+def scroll(vertical: int = 0, horizontal: int = 0) -> None:
+    """Scroll the mouse wheel by line units."""
+    if vertical == 0 and horizontal == 0:
+        return
+
+    wheel_count = 2 if horizontal != 0 else 1
+    event = Quartz.CGEventCreateScrollWheelEvent(
+        None,
+        Quartz.kCGScrollEventUnitLine,
+        wheel_count,
+        int(vertical),
+        int(horizontal),
+    )
+    Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)

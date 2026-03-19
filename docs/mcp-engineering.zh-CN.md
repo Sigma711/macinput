@@ -18,6 +18,7 @@ Language: [English](mcp-engineering.md) | [中文](mcp-engineering.zh-CN.md)
 - `get_mouse_position`
 - `move_mouse`
 - `click_mouse`
+- `scroll_mouse`
 - `press_keyboard_key`
 - `keyboard_key_down`
 - `keyboard_key_up`
@@ -32,6 +33,8 @@ Language: [English](mcp-engineering.md) | [中文](mcp-engineering.zh-CN.md)
 - 足以操作任意 macOS 应用
 - 足够小，便于 Agent 规划与解释
 - 足够克制，能降低误操作风险
+
+对于键盘相关 tool，MCP 层同时接受字符串数字键（如 `"3"`）和数字输入（如 `3`），并统一规范化为数字键本身，避免宿主把单个数字序列化成 JSON number 时出现脆弱校验失败。
 
 ## 安全默认值
 

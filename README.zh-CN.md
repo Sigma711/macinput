@@ -103,6 +103,7 @@ macinput-mcp --transport streamable-http --host 127.0.0.1 --port 8000 --path /mc
 - `get_mouse_position`
 - `move_mouse`
 - `click_mouse`
+- `scroll_mouse`
 - `press_keyboard_key`
 - `keyboard_key_down`
 - `keyboard_key_up`
@@ -224,6 +225,7 @@ CI 会在 `push` 和 `pull_request` 时执行 lint 与测试。Release workflow 
 - 必须运行在有图形会话的真实桌面环境
 - CI 很难完整覆盖 UI 注入行为，真实机器验证仍然必要
 - `paste_text_input` 通过系统剪贴板工作，当前只保留并恢复纯文本剪贴板内容
+- `press_keyboard_key`、`keyboard_key_down`、`keyboard_key_up` 既接受字符串键值（如 `"3"`），也接受数字键输入（如 `3`）
 - 不包含 OCR、元素识别或窗口语义理解，这些应由上层 Agent 负责
 
 ## 面向维护者的建议

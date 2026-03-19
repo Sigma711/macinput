@@ -103,6 +103,7 @@ If the package is already installed into the current environment:
 - `get_mouse_position`
 - `move_mouse`
 - `click_mouse`
+- `scroll_mouse`
 - `press_keyboard_key`
 - `keyboard_key_down`
 - `keyboard_key_up`
@@ -224,6 +225,7 @@ The CI workflow runs lint and tests on `push` and `pull_request`. The release wo
 - Requires a real GUI session
 - CI can validate imports and configuration, but real machine validation is still necessary for UI injection
 - `paste_text_input` uses the system clipboard and currently preserves/restores plain-text clipboard content only
+- `press_keyboard_key`, `keyboard_key_down`, and `keyboard_key_up` accept either string keys like `"3"` or numeric digit inputs like `3`
 - Does not include OCR, UI element detection, or semantic window understanding
 
 ## Recommended follow-up work

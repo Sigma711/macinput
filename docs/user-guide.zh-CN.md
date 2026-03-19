@@ -10,6 +10,7 @@ Language: [English](user-guide.md) | [中文](user-guide.zh-CN.md)
 
 - 让 Agent 通过截图观察当前桌面
 - 点击或移动鼠标
+- 垂直或水平滚动鼠标滚轮
 - 输入文本或触发快捷键
 - 向不稳定响应直接键入事件的输入框粘贴短文本
 
